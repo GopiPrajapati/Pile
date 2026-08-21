@@ -1,0 +1,38 @@
+export const fallbackEvents = [
+  {
+    id: '1',
+    title: 'ADICTO: Berlin Festival',
+    type: 'Workshop',
+    dance: 'Bachata',
+    date: '24–26 Feb, 2022',
+    price: '€30',
+    color: '#B63232',
+  },
+  {
+    id: '2',
+    title: 'Bachata: Open level',
+    type: 'Course',
+    dance: 'Bachata',
+    date: '27 Feb, 2022',
+    price: '€12',
+    color: '#9D4D63',
+  },
+  {
+    id: '3',
+    title: 'SSD Rowing 2022',
+    type: 'Festival',
+    dance: 'Bachata',
+    date: '7–13 Jun, 2022',
+    price: '€65',
+    color: '#EA553B',
+  },
+  {
+    id: '4',
+    title: 'Berlin Sensual Nights',
+    type: 'Party',
+    dance: 'Bachata',
+    date: '29 Feb, 2022',
+    price: '€30',
+    color: '#D8C0A0',
+  },
+];
