@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Images from '../../../assets/images';
+import Strings from '../../../assets/strings';
 import Header from '../../../components/Header';
 
 const BackIcon = Images.eventBack;
@@ -19,45 +20,50 @@ const FavoriteIcon = Images.heartOutline;
 
 const eventValue = (event: any, ...keys: string[]) =>
   keys.map(key => event?.[key]).find(Boolean);
-const DEFAULT_DESCRIPTION =
-  'ADICTO: Berlin Festival returns for its most ambitious edition yet. Set against the industrial architectural backdrop of Berlin, this festival bridges the gap between raw contemporary aesthetics and the passionate precision of Bachata.\n\nExpect world-class instructors, immersive workshop sessions that challenge your technique, and nocturnal social rooms where the music never stops. Our curation focuses on the "Plié" philosophy—finding grace and stability in every movement.';
-
 const EventDetailsScreen = ({ navigation, route }: any) => {
   const event = route.params?.event ?? {};
   const title =
     eventValue(event, 'title', 'name', 'event_name') ||
-    'ADICTO: Berlin Festival';
-  const type = eventValue(event, 'type') || event?.keywords?.[0] || 'Workshop';
+    Strings.eventDetails.defaultTitle;
+  const type =
+    eventValue(event, 'type') ||
+    event?.keywords?.[0] ||
+    Strings.eventDetails.defaultType;
   const dance =
-    eventValue(event, 'dance') || event?.danceStyles?.[0]?.ds_name || 'Bachata';
+    eventValue(event, 'dance') ||
+    event?.danceStyles?.[0]?.ds_name ||
+    Strings.eventDetails.defaultDanceStyle;
   const date =
     eventValue(event, 'date', 'readable_from_date') ||
-    '24 - 26 Feb 2022, 21:00 onwards';
-  const city = eventValue(event, 'city') || 'Berlin';
-  const country = eventValue(event, 'country') || 'Germany';
+    Strings.eventDetails.defaultDate;
+  const city = eventValue(event, 'city') || Strings.eventDetails.defaultCity;
+  const country =
+    eventValue(event, 'country') || Strings.eventDetails.defaultCountry;
   const price =
     eventValue(event, 'price') ||
-    (event.event_price_from ? `€${event.event_price_from}` : '€30 – €100');
+    (event.event_price_from
+      ? `€${event.event_price_from}`
+      : Strings.eventDetails.defaultPrice);
   const organiser =
     eventValue(event, 'organiser', 'organizer', 'organisation_name') ||
-    'Adicto International';
+    Strings.eventDetails.defaultOrganiser;
   const description =
     eventValue(event, 'description', 'event_description') ||
-    DEFAULT_DESCRIPTION;
+    Strings.eventDetails.defaultDescription;
 
   return (
     <SafeAreaView edges={['top', 'bottom']} style={styles.safe}>
       <Header
         title=""
         leftAccessory={
-        <Pressable
-          accessibilityLabel="Go back"
-          hitSlop={12}
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <BackIcon height={24} width={24} />
-        </Pressable>
+          <Pressable
+            accessibilityLabel={Strings.eventDetails.goBack}
+            hitSlop={12}
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <BackIcon height={24} width={24} />
+          </Pressable>
         }
       />
       <ScrollView
@@ -70,13 +76,13 @@ const EventDetailsScreen = ({ navigation, route }: any) => {
           <Image source={Images.eventPoster as any} style={styles.poster} />
           <View style={styles.heroActions}>
             <Pressable
-              accessibilityLabel="Share event"
+              accessibilityLabel={Strings.eventDetails.shareEvent}
               style={styles.heroButton}
             >
               <ShareIcon height={20} width={20} />
             </Pressable>
             <Pressable
-              accessibilityLabel="Add to favourites"
+              accessibilityLabel={Strings.eventDetails.addToFavorites}
               style={styles.heroButton}
             >
               <FavoriteIcon height={20} width={20} />
@@ -95,18 +101,24 @@ const EventDetailsScreen = ({ navigation, route }: any) => {
           <View style={styles.details}>
             <Detail
               icon={<CalendarIcon height={21} width={19} />}
-              label="DATE & TIME"
+              label={Strings.eventDetails.dateAndTime}
               text={date}
             />
             <Detail
               icon={<LocationIcon height={21} width={18} />}
-              label="LOCATION"
+              label={Strings.eventDetails.location}
               text={`${city}, ${country}`}
             />
           </View>
-          <Image resizeMode="cover" source={Images.eventMap as any} style={styles.map} />
+          <Image
+            resizeMode="cover"
+            source={Images.eventMap as any}
+            style={styles.map}
+          />
           <View style={styles.about}>
-            <Text style={styles.sectionTitle}>About the Event</Text>
+            <Text style={styles.sectionTitle}>
+              {Strings.eventDetails.aboutEvent}
+            </Text>
             <Text style={styles.description}>{description}</Text>
           </View>
           <View style={styles.organiser}>
@@ -116,17 +128,27 @@ const EventDetailsScreen = ({ navigation, route }: any) => {
               </Text>
             </View>
             <View style={styles.organiserCopy}>
-              <Text style={styles.organiserLabel}>ORGANIZED BY</Text>
+              <Text style={styles.organiserLabel}>
+                {Strings.eventDetails.organizedBy}
+              </Text>
               <Text numberOfLines={1} style={styles.organiserName}>
                 {organiser}
               </Text>
-              <Pressable accessibilityLabel={`View ${organiser} profile`}>
-                <Text style={styles.profileLink}>View Profile</Text>
+              <Pressable
+                accessibilityLabel={Strings.eventDetails.viewOrganiserProfile(
+                  organiser,
+                )}
+              >
+                <Text style={styles.profileLink}>
+                  {Strings.eventDetails.viewProfile}
+                </Text>
               </Pressable>
             </View>
           </View>
           <Pressable accessibilityRole="button" style={styles.shareTickets}>
-            <Text style={styles.shareTicketsText}>Share tickets</Text>
+            <Text style={styles.shareTicketsText}>
+              {Strings.eventDetails.shareTickets}
+            </Text>
           </Pressable>
         </View>
       </ScrollView>

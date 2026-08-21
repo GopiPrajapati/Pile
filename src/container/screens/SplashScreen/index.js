@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+import images from '../../../assets/images';
+import Strings from '../../../assets/strings';
 import { selectAuth } from '../../../redux/slices/authSlice';
 import { Routes } from '../../Routes';
-import images from '../../../assets/images';
 
 const SplashScreen = ({ navigation }) => {
   const isAuthenticated = useSelector(
@@ -33,12 +34,10 @@ const SplashScreen = ({ navigation }) => {
       <StatusBar barStyle="dark-content" />
       <View style={styles.overlay} />
       <View style={styles.content}>
-        <Text style={styles.logo}>Plié</Text>
-        <Text style={styles.tagline}>ELEVATE THE MOVEMENT</Text>
+        <Text style={styles.logo}>{Strings.appName}</Text>
+        <Text style={styles.tagline}>{Strings.splash.tagline}</Text>
       </View>
-      <Text style={styles.footer}>
-        Your Dance · Your Stage{`\n`}DISCOVER · BOOK · MOVE
-      </Text>
+      <Text style={styles.footer}>{Strings.splash.footer}</Text>
     </View>
   );
 };

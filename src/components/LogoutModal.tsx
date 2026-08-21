@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import Strings from '../assets/strings';
 import Button from './Button';
 
 type LogoutModalProps = {
@@ -21,23 +22,21 @@ const LogoutModal = ({ visible, onCancel, onConfirm }: LogoutModalProps) => (
         onPress={event => event.stopPropagation()}
         style={styles.content}
       >
-        <Text style={styles.title}>Logout?</Text>
-        <Text style={styles.subtitle}>
-          Are you sure you want to log out of your account?
-        </Text>
+        <Text style={styles.title}>{Strings.logout.title}</Text>
+        <Text style={styles.subtitle}>{Strings.logout.message}</Text>
         <View style={styles.actions}>
           <Button
             onPress={onConfirm}
             style={styles.logoutButton}
             textStyle={styles.logoutText}
-            title="Log out"
+            title={Strings.profile.logOut}
           />
           <Pressable
             accessibilityRole="button"
             onPress={onCancel}
             style={styles.cancelButton}
           >
-            <Text style={styles.cancelText}>Cancel</Text>
+            <Text style={styles.cancelText}>{Strings.logout.cancel}</Text>
           </Pressable>
         </View>
       </Pressable>

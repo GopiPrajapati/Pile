@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { normalize } from '../commonutils/dimensionutils';
 import Images from '../assets/images';
+import Strings from '../assets/strings';
+import { normalize } from '../commonutils/dimensionutils';
 
 export type BottomTab = 'search' | 'events' | 'favorites' | 'profile';
 
@@ -11,10 +12,10 @@ type BottomBarProps = {
 };
 
 const tabs: { key: BottomTab; label: string }[] = [
-  { key: 'search', label: 'SEARCH' },
-  { key: 'events', label: 'EVENTS' },
-  { key: 'favorites', label: 'FAVOURITES' },
-  { key: 'profile', label: 'PROFILE' },
+  { key: 'search', label: Strings.tabs.search },
+  { key: 'events', label: Strings.tabs.events },
+  { key: 'favorites', label: Strings.tabs.favorites },
+  { key: 'profile', label: Strings.tabs.profile },
 ];
 
 const icons = {

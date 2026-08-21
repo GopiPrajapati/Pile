@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import Strings from '../../assets/strings';
 import API from '../../network/NetworkService';
 
 export const loginUser = createAsyncThunk(
@@ -9,12 +10,14 @@ export const loginUser = createAsyncThunk(
       const data = response?.data || response;
 
       if (response?.success === false || !data?.token) {
-        return rejectWithValue(response?.message || 'Login failed');
+        return rejectWithValue(response?.message || Strings.errors.loginFailed);
       }
 
       return data;
     } catch (error) {
-      return rejectWithValue(error?.message || error?.data?.message || 'Login failed');
+      return rejectWithValue(
+        error?.message || error?.data?.message || Strings.errors.loginFailed,
+      );
     }
   },
 );
@@ -35,7 +38,7 @@ const authSlice = createSlice({
   reducers: {
     signInAsGuest: state => {
       state.isAuthenticated = true;
-      state.name = 'Guest';
+      state.name = Strings.guestName;
       state.email = '';
       state.token = null;
       state.user = null;

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import Strings from '../../assets/strings';
 import API from '../../network/NetworkService';
 
 export const fetchEvents = createAsyncThunk(
@@ -7,12 +8,16 @@ export const fetchEvents = createAsyncThunk(
     try {
       const response = await API.getEventsListing();
       if (response?.success === false) {
-        return rejectWithValue(response.message || 'Failed to fetch events');
+        return rejectWithValue(
+          response.message || Strings.errors.eventsFetchFailed,
+        );
       }
       return response?.data?.events || [];
     } catch (error) {
       return rejectWithValue(
-        error?.message || error?.data?.message || 'Failed to fetch events',
+        error?.message ||
+          error?.data?.message ||
+          Strings.errors.eventsFetchFailed,
       );
     }
   },

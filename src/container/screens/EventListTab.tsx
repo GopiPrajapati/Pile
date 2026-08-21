@@ -11,8 +11,9 @@ import {
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { normalize } from '../../commonutils/dimensionutils';
 import Images from '../../assets/images';
+import Strings from '../../assets/strings';
+import { normalize } from '../../commonutils/dimensionutils';
 import Header from '../../components/Header';
 import { fetchEvents } from '../../redux/slices/eventsSlice';
 import { toggleFavorite } from '../../redux/slices/favoritesSlice';
@@ -94,12 +95,14 @@ const EventListTab = ({
     <>
       <Header />
       <Text style={styles.heading}>
-        {favoritesOnly ? 'Your Favourites' : 'Hello Renzo!'}
+        {favoritesOnly
+          ? Strings.eventList.favoritesHeading
+          : Strings.eventList.greeting}
       </Text>
       <Text style={styles.subheading}>
         {favoritesOnly
-          ? 'Find your saved dance moments.'
-          : 'Are you ready to dance? Explore today’s{`\n`}movements.'}
+          ? Strings.eventList.favoritesSubheading
+          : Strings.eventList.eventsSubheading}
       </Text>
       <View style={styles.searchWrap}>
         <Text style={styles.searchIcon}>⌕</Text>
@@ -108,7 +111,7 @@ const EventListTab = ({
           ref={searchInputRef}
           value={query}
           onChangeText={setQuery}
-          placeholder="Search events..."
+          placeholder={Strings.eventList.searchPlaceholder}
           placeholderTextColor="#8D8D8D"
           style={styles.search}
         />
@@ -141,8 +144,8 @@ const EventListTab = ({
             <View style={styles.emptyContainer}>
               <Text style={styles.empty}>
                 {favoritesOnly
-                  ? 'No favourite events yet.'
-                  : 'No events found.'}
+                  ? Strings.eventList.noFavorites
+                  : Strings.eventList.noEvents}
               </Text>
             </View>
           }
@@ -167,14 +170,16 @@ const EventCard = ({
 }) => (
   <Pressable
     accessibilityRole="button"
-    accessibilityLabel={`Open ${event.title || event.name || event.event_name}`}
+    accessibilityLabel={Strings.eventList.openEvent(
+      event.title || event.name || event.event_name,
+    )}
     onPress={onOpen}
     style={styles.eventCard}
   >
     <Image
-      accessibilityLabel={`${
-        event.title || event.name || event.event_name
-      } poster`}
+      accessibilityLabel={Strings.eventList.eventPoster(
+        event.title || event.name || event.event_name,
+      )}
       resizeMode="cover"
       source={poster}
       style={styles.poster}
@@ -182,30 +187,36 @@ const EventCard = ({
     <View style={styles.details}>
       <View style={styles.topline}>
         <Text style={styles.pill}>
-          {event.type || event.keywords?.[0] || 'Event'}
+          {event.type || event.keywords?.[0] || Strings.eventList.eventType}
         </Text>
         <Text style={styles.pill}>
-          {event.dance || event.danceStyles?.[0]?.ds_name || 'Bachata'}
+          {event.dance ||
+            event.danceStyles?.[0]?.ds_name ||
+            Strings.eventList.danceStyle}
         </Text>
       </View>
       <Text numberOfLines={1} style={styles.eventTitle}>
         {event.title || event.name || event.event_name}
       </Text>
       <Text style={styles.meta}>
-        ⌖ {event.city || 'Berlin'}, {event.country || 'Germany'}
+        ⌖ {event.city || Strings.eventList.city},{' '}
+        {event.country || Strings.eventList.country}
       </Text>
       <View style={styles.bottomline}>
         <Text style={styles.meta}>
-          ▣ {event.date || event.readable_from_date || 'Upcoming'}
+          ▣{' '}
+          {event.date || event.readable_from_date || Strings.eventList.upcoming}
         </Text>
         <Text style={styles.price}>
           {event.price ||
-            (event.event_price_from ? `€${event.event_price_from}` : 'Free')}
+            (event.event_price_from
+              ? `€${event.event_price_from}`
+              : Strings.eventList.free)}
         </Text>
       </View>
     </View>
     <Pressable
-      accessibilityLabel="Toggle favourite"
+      accessibilityLabel={Strings.eventList.toggleFavorite}
       hitSlop={10}
       onPress={onToggle}
       style={styles.heart}

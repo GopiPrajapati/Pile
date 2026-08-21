@@ -7,18 +7,19 @@ import {
   Text,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useDispatch, useSelector } from 'react-redux';
+import images from '../../../assets/images';
+import Strings from '../../../assets/strings';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
-import { Routes } from '../../Routes';
-import FastImage from 'react-native-fast-image';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   loginUser,
   selectAuth,
   signInAsGuest,
 } from '../../../redux/slices/authSlice';
-import images from '../../../assets/images';
+import { Routes } from '../../Routes';
 
 const AppleIcon = images.apple;
 const FacebookIcon = images.facebook;
@@ -32,7 +33,7 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
   const dispatch = useDispatch<any>();
   const isSubmitting = useSelector((state: any) => selectAuth(state).loading);
   const showUnavailable = () =>
-    Alert.alert('Coming soon', 'This action is not available yet.');
+    Alert.alert(Strings.login.comingSoonTitle, Strings.login.comingSoonMessage);
   const enterApp = () => {
     dispatch(signInAsGuest());
     navigation.replace(Routes.MAIN_SCREEN);
@@ -40,8 +41,8 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
   const signIn = () => {
     if (!email.trim() || !password) {
       Alert.alert(
-        'Missing details',
-        'Enter your email and password to sign in.',
+        Strings.login.missingDetailsTitle,
+        Strings.login.missingDetailsMessage,
       );
       return;
     }
@@ -50,7 +51,10 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
       .unwrap()
       .then(() => navigation.replace(Routes.MAIN_SCREEN))
       .catch((error: any) =>
-        Alert.alert('Unable to sign in', error || 'Please check your connection and try again.'),
+        Alert.alert(
+          Strings.login.unableToSignInTitle,
+          error || Strings.login.signInErrorMessage,
+        ),
       );
   };
 
@@ -77,8 +81,8 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
       >
         <View style={styles.content}>
           <View style={styles.brand}>
-            <Text style={styles.brandName}>Plié</Text>
-            <Text style={styles.tagline}>ELEVATE THE MOVEMENT</Text>
+            <Text style={styles.brandName}>{Strings.appName}</Text>
+            <Text style={styles.tagline}>{Strings.splash.tagline}</Text>
           </View>
           <View style={styles.card}>
             <View style={styles.form}>
@@ -86,25 +90,27 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
                 autoCapitalize="none"
                 autoComplete="email"
                 inputMode="email"
-                inputTitle="Email"
+                inputTitle={Strings.login.emailLabel}
                 keyboardType="email-address"
                 onChangeText={setEmail}
-                placeholder="email@example.com"
+                placeholder={Strings.login.emailPlaceholder}
                 returnKeyType="next"
                 value={email}
               />
               <View>
                 <Input
                   autoComplete="password"
-                  inputTitle="Password"
+                  inputTitle={Strings.login.passwordLabel}
                   onChangeText={setPassword}
-                  placeholder="Enter your password"
+                  placeholder={Strings.login.passwordPlaceholder}
                   secureTextEntry={!isPasswordVisible}
                   value={password}
                 />
                 <Pressable
                   accessibilityLabel={
-                    isPasswordVisible ? 'Hide password' : 'Show password'
+                    isPasswordVisible
+                      ? Strings.login.hidePassword
+                      : Strings.login.showPassword
                   }
                   hitSlop={12}
                   onPress={() => setPasswordVisible(value => !value)}
@@ -116,47 +122,53 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
                   onPress={showUnavailable}
                   style={styles.forgotButton}
                 >
-                  <Text style={styles.smallLink}>Forgot Password?</Text>
+                  <Text style={styles.smallLink}>
+                    {Strings.login.forgotPassword}
+                  </Text>
                 </Pressable>
               </View>
               <Button
                 disabled={isSubmitting}
-                title={isSubmitting ? 'Signing In...' : 'Sign In'}
+                title={
+                  isSubmitting ? Strings.login.signingIn : Strings.login.signIn
+                }
                 onPress={signIn}
               />
             </View>
             <Text style={styles.memberText}>
-              Not a member?{' '}
+              {Strings.login.notAMember}
               <Text onPress={showUnavailable} style={styles.signupText}>
-                Sign Up Here
+                {Strings.login.signUpHere}
               </Text>
             </Text>
             <View style={styles.socialSection}>
               <View style={styles.dividerRow}>
                 <View style={styles.divider} />
-                <Text style={styles.dividerText}>or Sign In with</Text>
+                <Text style={styles.dividerText}>
+                  {Strings.login.signInWith}
+                </Text>
                 <View style={styles.divider} />
               </View>
               <View style={styles.socialButtons}>
                 <SocialButton
                   Icon={GoogleIcon}
-                  label="Sign in with Google"
+                  label={Strings.login.googleSignIn}
                   onPress={showUnavailable}
                 />
                 <SocialButton
                   Icon={AppleIcon}
-                  label="Sign in with Apple"
+                  label={Strings.login.appleSignIn}
                   onPress={showUnavailable}
                 />
                 <SocialButton
                   Icon={FacebookIcon}
-                  label="Sign in with Facebook"
+                  label={Strings.login.facebookSignIn}
                   onPress={showUnavailable}
                 />
               </View>
             </View>
             <Pressable onPress={enterApp} style={styles.guestButton}>
-              <Text style={styles.guestText}>Enter as Guest</Text>
+              <Text style={styles.guestText}>{Strings.login.enterAsGuest}</Text>
             </Pressable>
           </View>
         </View>

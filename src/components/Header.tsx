@@ -1,5 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import Strings from '../assets/strings';
 import { normalize } from '../commonutils/dimensionutils';
 
 type HeaderProps = {
@@ -8,7 +9,11 @@ type HeaderProps = {
   rightAccessory?: ReactNode;
 };
 
-const Header = ({ title = 'Plié', leftAccessory, rightAccessory }: HeaderProps) => {
+const Header = ({
+  title = Strings.appName,
+  leftAccessory,
+  rightAccessory,
+}: HeaderProps) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       (StatusBar as any).setBackgroundColor?.('#F9F9F8');
@@ -19,9 +24,13 @@ const Header = ({ title = 'Plié', leftAccessory, rightAccessory }: HeaderProps)
     <>
       <StatusBar barStyle="dark-content" />
       <View style={styles.topBar}>
-        {leftAccessory ? <View style={styles.leftAccessory}>{leftAccessory}</View> : null}
+        {leftAccessory ? (
+          <View style={styles.leftAccessory}>{leftAccessory}</View>
+        ) : null}
         {title ? <Text style={styles.logo}>{title}</Text> : null}
-        {rightAccessory ? <View style={styles.rightAccessory}>{rightAccessory}</View> : null}
+        {rightAccessory ? (
+          <View style={styles.rightAccessory}>{rightAccessory}</View>
+        ) : null}
       </View>
     </>
   );

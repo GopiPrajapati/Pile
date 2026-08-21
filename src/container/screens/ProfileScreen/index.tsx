@@ -1,10 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Images from '../../../assets/images';
-import LogoutModal from '../../../components/LogoutModal';
+import Strings from '../../../assets/strings';
 import Header from '../../../components/Header';
+import LogoutModal from '../../../components/LogoutModal';
 import { selectAuth, signOut } from '../../../redux/slices/authSlice';
 import { Routes } from '../../Routes';
 
@@ -55,7 +56,7 @@ const ProfileScreen = () => {
         <View style={styles.body}>
           <View style={styles.profileHeader}>
             <Pressable
-              accessibilityLabel="Edit profile photo"
+              accessibilityLabel={Strings.profile.editPhoto}
               style={styles.avatar}
             >
               <View style={styles.avatarBackground}>
@@ -66,27 +67,35 @@ const ProfileScreen = () => {
               </View>
             </Pressable>
             <View style={styles.profileCopy}>
-              <Text style={styles.profileName}>Dance Enthusiast</Text>
+              <Text style={styles.profileName}>
+                {Strings.profile.defaultName}
+              </Text>
               <Text style={styles.profileEmail}>
-                {email || 'abc@gmail.com'}
+                {email || Strings.profile.defaultEmail}
               </Text>
             </View>
           </View>
           <View style={styles.menu}>
-            <MenuRow Icon={TicketIcon} label="My Tickets" />
-            <MenuRow Icon={PaymentIcon} label="Payment Methods" />
-            <MenuRow Icon={NotificationIcon} label="Notification Settings" />
-            <MenuRow Icon={HelpIcon} label="Help & Support" />
+            <MenuRow Icon={TicketIcon} label={Strings.profile.myTickets} />
+            <MenuRow
+              Icon={PaymentIcon}
+              label={Strings.profile.paymentMethods}
+            />
+            <MenuRow
+              Icon={NotificationIcon}
+              label={Strings.profile.notificationSettings}
+            />
+            <MenuRow Icon={HelpIcon} label={Strings.profile.helpAndSupport} />
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Log out"
+              accessibilityLabel={Strings.profile.logOut}
               onPress={() => setLogoutModalVisible(true)}
               style={styles.logoutRow}
             >
               <View style={styles.menuIcon}>
                 <LogoutIcon height={18} width={18} />
               </View>
-              <Text style={styles.logoutText}>Logout</Text>
+              <Text style={styles.logoutText}>{Strings.profile.logOut}</Text>
             </Pressable>
           </View>
         </View>
