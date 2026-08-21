@@ -27,6 +27,7 @@ const SplashScreen = ({ navigation }) => {
       <FastImage
         source={images.ic_login_background}
         style={styles.backgroundImage}
+        resizeMode={FastImage.resizeMode.cover}
       />
 
       <StatusBar barStyle="dark-content" />
